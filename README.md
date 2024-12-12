@@ -159,7 +159,8 @@ Publish the website in the given URL.
 </html>
 ```
 # SERVER SIDE PROCESSING:
-![Screenshot 2024-12-05 145114](https://github.com/user-attachments/assets/dbd13e63-3a96-4427-822a-776ac4997dc4)
+
+![Screenshot 2024-12-12 194710](https://github.com/user-attachments/assets/7e995246-17d0-4c92-a8e1-51bb8e251801)
 
 # HOMEPAGE:
 ![Screenshot 2024-12-05 145218](https://github.com/user-attachments/assets/07ea6ad2-3baa-482a-8df8-b0b793b21cc4)
