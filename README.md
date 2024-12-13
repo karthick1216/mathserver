@@ -30,6 +30,9 @@ Publish the website in the given URL.
 
 # PROGRAM :
 ```
+
+home.html
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -126,37 +129,57 @@ Publish the website in the given URL.
     <main>
         <section class="calculator">
             <h2>Enter Values to Calculate Power</h2>
-            <form id="powerForm">
+            <form action="{% url 'calculate_power' %}" method="post">
+                {% csrf_token %}
                 <label for="intensity">Intensity (I):</label>
                 <input type="number" id="intensity" name="intensity" required>
                 
                 <label for="resistance">Resistance (R):</label>
                 <input type="number" id="resistance" name="resistance" required>
                 
-                <button type="button" onclick="calculatePower()">Calculate Power</button>
+                <button type="submit">Calculate Power</button>
             </form>
-            <div id="result"></div>
+            <div id="result">
+                {% if result %}
+                    <strong>Power (P):</strong> {{ result }} watts
+                {% endif %}
+            </div>
         </section>
     </main>
     <footer>
         <p>&copy; Karthick.S </p>
     </footer>
-
-    <script>
-        function calculatePower() {
-            var intensity = document.getElementById('intensity').value;
-            var resistance = document.getElementById('resistance').value;
-            
-            if (intensity && resistance) {
-                var power = Math.pow(intensity, 2) * resistance;
-                document.getElementById('result').innerHTML = '<strong>Power (P):</strong> ' + power.toFixed(2) + ' watts';
-            } else {
-                document.getElementById('result').innerText = 'Please enter both Intensity and Resistance';
-            }
-        }
-    </script>
 </body>
 </html>
+
+
+urls.py
+
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.home, name='home'),
+    path('calculate/', views.calculate_power, name='calculate_power'),
+]
+
+views.py
+
+from django.shortcuts import render
+from django.http import HttpResponse
+
+def home(request):
+    return render(request, 'calculator/home.html')
+
+def calculate_power(request):
+    if request.method == 'POST':
+        intensity = float(request.POST.get('intensity'))
+        resistance = float(request.POST.get('resistance'))
+        power = (intensity ** 2) * resistance
+        return render(request, 'calculator/home.html', {'result': power})
+    return HttpResponse("Invalid request")
+           
+           
 ```
 # SERVER SIDE PROCESSING:
 
@@ -164,6 +187,7 @@ Publish the website in the given URL.
 
 # HOMEPAGE:
 ![Screenshot 2024-12-05 145218](https://github.com/user-attachments/assets/07ea6ad2-3baa-482a-8df8-b0b793b21cc4)
+![Screenshot 2024-12-05 145114](https://github.com/user-attachments/assets/4b2d19a9-1b9b-4b04-a328-2e5a6a56b7cc)
 
 
 # RESULT:
